@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Benchmark showcase for schema-guided e-commerce information extraction with fine-tuned Qwen2.5 small language models.">
+<title>SchemaCraft — E-commerce Information Extraction</title>
+<style>
+:root{--bg:#0a0d14;--panel:#111723;--panel2:#151e2d;--text:#f2f5fb;--muted:#a3afc2;--line:#293448;--cyan:#7ce7d4;--blue:#86a9ff;--purple:#c5a3ff;--lime:#c8f169;--orange:#ffbd7a;--radius:20px;--shadow:0 20px 60px rgba(0,0,0,.22)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 10% 0%,#17253b 0,transparent 38%),radial-gradient(ellipse at 95% 15%,#1e203d 0,transparent 32%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55}a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}.wrap{max-width:1220px;margin:auto;padding:0 24px}.nav{display:flex;align-items:center;justify-content:space-between;padding:24px 0;border-bottom:1px solid var(--line)}.brand{display:flex;gap:11px;align-items:center;font-weight:800;letter-spacing:-.03em}.logo{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--cyan),var(--blue));display:grid;place-items:center;color:#07131a;font-weight:900}.navlinks{display:flex;gap:22px;font-size:13px;color:var(--muted)}.navlinks a{color:var(--muted)}.hero{padding:82px 0 58px;display:grid;grid-template-columns:1.15fr .85fr;gap:42px;align-items:center}.eyebrow{text-transform:uppercase;letter-spacing:.17em;font-size:11px;font-weight:800;color:var(--cyan)}h1{font-size:clamp(42px,6vw,76px);line-height:.99;letter-spacing:-.065em;margin:18px 0 22px;max-width:760px}.gradient{background:linear-gradient(100deg,#f7f9ff 5%,#8ce8d5 55%,#a8baff);-webkit-background-clip:text;background-clip:text;color:transparent}.lead{font-size:17px;color:#b8c4d6;max-width:670px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.btn{display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border:1px solid #34445d;border-radius:12px;color:var(--text);font-size:13px;font-weight:700;background:#151e2c}.btn.primary{background:var(--cyan);border-color:var(--cyan);color:#07151a}.hero-card{background:linear-gradient(145deg,rgba(29,42,61,.94),rgba(16,22,34,.94));border:1px solid #33445b;border-radius:26px;padding:26px;box-shadow:var(--shadow);position:relative;overflow:hidden}.hero-card:before{content:"";position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(124,231,212,.12);filter:blur(35px);right:-40px;top:-70px}.mini-top{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;position:relative}.score{font-size:64px;font-weight:850;letter-spacing:-.07em;margin:14px 0 0;line-height:1}.score span{font-size:24px;color:var(--cyan);letter-spacing:-.02em}.score-label{font-size:14px;color:#d4deed;margin-top:9px}.bar{height:9px;background:#263246;border-radius:99px;overflow:hidden;margin:22px 0 8px}.bar span{display:block;height:100%;width:84.2%;background:linear-gradient(90deg,var(--cyan),var(--blue));border-radius:99px}.tiny{font-size:11px;color:var(--muted)}.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}.hero-stats div{border-top:1px solid #35445a;padding-top:13px}.hero-stats b{display:block;font-size:21px;letter-spacing:-.04em}.hero-stats small{color:var(--muted);font-size:11px}.section{padding:58px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:25px}.section-head h2{font-size:clamp(27px,4vw,42px);letter-spacing:-.05em;line-height:1.05;margin:10px 0}.section-head p{max-width:570px;color:var(--muted);margin:0}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.kpi,.panel,.model-card,.metric-card{background:linear-gradient(145deg,rgba(20,29,43,.96),rgba(14,20,31,.96));border:1px solid var(--line);border-radius:var(--radius);padding:21px}.kpi .label{font-size:12px;color:var(--muted)}.kpi .value{font-size:32px;font-weight:800;letter-spacing:-.055em;margin:8px 0 2px}.kpi .detail{font-size:11px;color:var(--muted)}.kpi.accent{border-color:#3a756d}.kpi.accent .value{color:var(--cyan)}.split{display:grid;grid-template-columns:1fr 1fr;gap:18px}.panel h3{margin:0 0 6px;font-size:18px;letter-spacing:-.025em}.panel p{color:var(--muted);font-size:13px;margin:0 0 18px}.chart-wrap{height:260px;position:relative}.chart-wrap canvas{width:100%;height:100%;display:block}.pill{display:inline-flex;border:1px solid #34435a;background:#192335;border-radius:99px;padding:5px 9px;font-size:11px;color:#c5d2e6}.pill.cyan{color:var(--cyan);border-color:#2e655d;background:#102b2a}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.step{padding:20px;border:1px solid var(--line);border-radius:18px;background:#101723}.step .num{font-size:12px;color:var(--cyan);font-weight:800;letter-spacing:.1em}.step h3{font-size:16px;margin:13px 0 7px}.step p{font-size:13px;color:var(--muted);margin:0}.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}.filters label{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);background:#111a28;border:1px solid var(--line);padding:7px 10px;border-radius:10px}.filters select,.filters input{background:transparent;border:0;color:var(--text);outline:none;max-width:170px}.filters select option{background:#101723}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px}.table{width:100%;border-collapse:collapse;min-width:850px;background:rgba(15,22,33,.7);font-size:12px}.table th{position:sticky;top:0;background:#192333;color:#aebbd0;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.08em;padding:13px 14px;white-space:nowrap}.table td{padding:13px 14px;border-top:1px solid #222d40;white-space:nowrap}.table tr:hover td{background:rgba(124,231,212,.035)}.table .best{color:var(--cyan);font-weight:800}.table .model{font-weight:700;color:#f0f4fc}.table .sub{display:block;font-size:10px;color:var(--muted);font-weight:400}.table-foot{display:flex;justify-content:space-between;gap:15px;padding:12px 3px;color:var(--muted);font-size:11px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.model-card{padding:0;overflow:hidden}.card-top{padding:19px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:start}.card-top h3{margin:0;font-size:17px}.card-top p{font-size:11px;color:var(--muted);margin:4px 0 0}.card-body{padding:18px}.bigmetric{display:flex;justify-content:space-between;align-items:baseline}.bigmetric strong{font-size:37px;letter-spacing:-.06em}.bigmetric span{font-size:11px;color:var(--muted)}.metricline{display:flex;justify-content:space-between;gap:10px;border-top:1px solid #263246;padding:9px 0;font-size:12px}.metricline span{color:var(--muted)}.metricline b{font-weight:750}.card-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.card-links a{font-size:11px;border:1px solid #34445b;border-radius:9px;padding:7px 9px}.note{padding:17px 19px;border-radius:14px;border:1px solid #625137;background:rgba(64,47,27,.24);font-size:12px;color:#e7d5b8;margin-top:18px}.note b{color:var(--orange)}.definitions{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.definition{padding:16px;border-radius:14px;background:#111a27;border:1px solid var(--line)}.definition b{display:block;font-size:13px;margin-bottom:6px}.definition p{font-size:12px;color:var(--muted);margin:0}.footer{padding:30px 0 42px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.muted{color:var(--muted)}.empty{padding:28px;text-align:center;color:var(--muted)}@media(max-width:900px){.hero{grid-template-columns:1fr;padding-top:55px}.hero-card{max-width:600px}.kpis{grid-template-columns:repeat(2,1fr)}.split{grid-template-columns:1fr}.steps{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:repeat(2,1fr)}.definitions{grid-template-columns:repeat(2,1fr)}.navlinks{display:none}}@media(max-width:580px){.wrap{padding:0 16px}.hero{padding-top:42px}.kpis,.cards,.steps,.definitions{grid-template-columns:1fr 1fr}.kpi{padding:16px}.kpi .value{font-size:26px}.section{padding:40px 0}.section-head{display:block}.section-head p{margin-top:12px}.hero-stats{gap:8px}.hero-stats b{font-size:18px}.hero-stats small{font-size:10px}.panel{padding:16px}.cards{grid-template-columns:1fr}.score{font-size:55px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <div class="brand"><div class="logo">S</div><span>SchemaCraft <span style="color:var(--muted);font-weight:500">/ Research project</span></span></div>
+    <div class="navlinks"><a href="#overview">Overview</a><a href="#results">Benchmarks</a><a href="#models">Models</a><a href="#method">Methodology</a></div>
+  </nav>
+
+  <header class="hero" id="overview">
+    <div>
+      <div class="eyebrow">Small language models · Structured output · Benchmarking</div>
+      <h1><span class="gradient">Turning product text into reliable JSON.</span></h1>
+      <p class="lead">A comparative fine-tuning project exploring how Qwen2.5 0.5B, 1.5B, and 3B instruction models extract e-commerce attributes under a supplied schema. The project evaluates LoRA and QLoRA configurations, then compares adapter runs and merged checkpoints against base models.</p>
+      <div class="actions">
+        <a class="btn primary" href="#results">Explore benchmark results ↓</a>
+        <a class="btn" href="#method">How it works</a>
+        <a class="btn" href="https://huggingface.co/vara201" target="_blank" rel="noopener">Hugging Face profile ↗</a>
+      </div>
+      <p class="tiny" style="margin-top:15px">Reported benchmark runs · 500 examples per model · Static, deploy-ready page</p>
+    </div>
+    <aside class="hero-card">
+      <div class="mini-top"><span>TOP REPORTED MERGED CHECKPOINT</span><span class="pill cyan">3B · QLoRA 4-bit</span></div>
+      <div class="score">84.2<span>%</span></div>
+      <div class="score-label">Exact-match accuracy on the reported 500-example evaluation</div>
+      <div class="bar"><span></span></div>
+      <div class="tiny">Base Qwen2.5-3B-Instruct exact match: 71.2%</div>
+      <div class="hero-stats">
+        <div><b>+13.0 pp</b><small>Exact match vs. base 3B</small></div>
+        <div><b>99.8%</b><small>JSON parse success</small></div>
+        <div><b>97.75%</b><small>Field accuracy</small></div>
+      </div>
+    </aside>
+  </header>
+
+  <section class="section">
+    <div class="section-head">
+      <div><div class="eyebrow">At a glance</div><h2>What the experiments measure</h2></div>
+      <p>Quality is more than valid JSON. The benchmark also tracks whether outputs satisfy the requested schema, exactly match the reference object, and correctly predict individual fields.</p>
+    </div>
+    <div class="kpis">
+      <div class="kpi accent"><div class="label">Best merged exact match</div><div class="value">84.2%</div><div class="detail">Qwen2.5-3B · QLoRA 4-bit</div></div>
+      <div class="kpi"><div class="label">Best adapter-run exact match</div><div class="value">83.4%</div><div class="detail">Qwen2.5-3B · QLoRA 4-bit</div></div>
+      <div class="kpi"><div class="label">Largest base-model baseline</div><div class="value">71.2%</div><div class="detail">Qwen2.5-3B-Instruct</div></div>
+      <div class="kpi"><div class="label">Configurations in this showcase</div><div class="value">21</div><div class="detail">3 base + 9 merged + 9 adapter runs</div></div>
+    </div>
+  </section>
+
+  <section class="section" id="results">
+    <div class="section-head">
+      <div><div class="eyebrow">Results explorer</div><h2>Compare the model runs</h2></div>
+      <p>Filter by model size, checkpoint type, or precision. Select a metric to rank the table and inspect the trade-offs.</p>
+    </div>
+    <div class="split">
+      <div class="panel">
+        <h3>Exact match by model run</h3><p>Reference JSON object must match the parsed prediction.</p>
+        <div class="chart-wrap"><canvas id="exactChart" aria-label="Horizontal bar chart of exact match by model run"></canvas></div>
+      </div>
+      <div class="panel">
+        <h3>Quality profile of top merged runs</h3><p>JSON validity, schema compliance, exact match, and field accuracy.</p>
+        <div class="chart-wrap"><canvas id="qualityChart" aria-label="Chart comparing metrics of top merged models"></canvas></div>
+      </div>
+    </div>
+    <div style="height:20px"></div>
+    <div class="filters">
+      <label>Model size <select id="sizeFilter"><option value="">All sizes</option><option>0.5B</option><option>1.5B</option><option>3B</option></select></label>
+      <label>Run type <select id="kindFilter"><option value="">All run types</option><option>Base model</option><option>Merged fine-tuned</option><option>Adapter evaluation</option></select></label>
+      <label>Configuration <select id="formatFilter"><option value="">All configurations</option><option>Base</option><option>QLoRA 4-bit</option><option>QLoRA 8-bit</option><option>LoRA FP16</option></select></label>
+      <label>Rank by <select id="metricFilter"><option value="exact_match_pct">Exact match</option><option value="field_accuracy_pct">Field accuracy</option><option value="schema_compliance_pct">Schema compliance</option><option value="json_parse_success_pct">JSON parse success</option></select></label>
+    </div>
+    <div class="table-wrap">
+      <table class="table"><thead><tr><th>Model / run</th><th>Type</th><th>JSON parse</th><th>Schema compliance</th><th>Exact match</th><th>Field accuracy</th><th>Failures</th><th>Examples</th></tr></thead><tbody id="resultsBody"></tbody></table>
+    </div>
+    <div class="table-foot"><span id="rowCount">Showing all runs</span><span>All percentages are reported values from the supplied metric files.</span></div>
+    <div class="note"><b>Comparability note:</b> Adapter evaluation metrics and merged-checkpoint metrics are shown separately because their outputs came from distinct evaluation runs and some reported values differ. They should not be treated as a controlled adapter-vs-merged speed or quality experiment unless prompts, parsing, schema validation, generation settings, and test examples are verified to match.</div>
+  </section>
+
+  <section class="section" id="models">
+    <div class="section-head">
+      <div><div class="eyebrow">Model highlights</div><h2>Standout checkpoints</h2></div>
+      <p>Use these cards as a quick tour of the current reported results. The links point to the associated Hugging Face model repositories where available.</p>
+    </div>
+    <div class="cards" id="highlightCards"></div>
+  </section>
+
+  <section class="section" id="method">
+    <div class="section-head">
+      <div><div class="eyebrow">Pipeline</div><h2>From product data to evaluation</h2></div>
+      <p>The workflow is designed around schema-guided extraction and repeatable comparisons across model sizes and adaptation strategies.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="num">01 / INPUT</div><h3>Instruction + source + schema</h3><p>Each example provides the extraction instruction, source product content, and a target JSON schema.</p></div>
+      <div class="step"><div class="num">02 / ADAPT</div><h3>Fine-tune Qwen2.5</h3><p>Compare LoRA FP16 with QLoRA 4-bit and 8-bit configurations across 0.5B, 1.5B, and 3B models.</p></div>
+      <div class="step"><div class="num">03 / GENERATE</div><h3>Produce structured JSON</h3><p>Run deterministic generation and parse predictions into JSON objects for downstream evaluation.</p></div>
+      <div class="step"><div class="num">04 / EVALUATE</div><h3>Measure output quality</h3><p>Report JSON parse success, schema compliance, exact match, field accuracy, and generation failures.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><div><div class="eyebrow">Metric guide</div><h2>How to read the scores</h2></div></div>
+    <div class="definitions">
+      <div class="definition"><b>JSON parse success</b><p>Share of generated outputs that the evaluation parser accepts as JSON.</p></div>
+      <div class="definition"><b>Schema compliance</b><p>Share of outputs passing the configured schema validation. Check each run's validation denominator.</p></div>
+      <div class="definition"><b>Exact match</b><p>Share of predictions whose parsed JSON structure equals the expected JSON object.</p></div>
+      <div class="definition"><b>Field accuracy</b><p>Correct expected leaf fields divided by evaluated expected fields; this can remain high even when full-object exact match is lower.</p></div>
+    </div>
+    <div class="note"><b>Interpretation:</b> A high JSON parse rate indicates syntactic reliability, not necessarily correct extraction. Exact match is stricter than field accuracy because one incorrect or missing value can make an entire object fail exact match.</div>
+  </section>
+
+  <footer class="footer">
+    <div><b style="color:var(--text)">SchemaCraft</b> · Qwen2.5 e-commerce extraction benchmark</div>
+    <div>Built from supplied evaluation artifacts · Update model links and project details before public release</div>
+  </footer>
+</div>
+<script>
+const RESULTS = [{"model_label": "qwen-0.5B", "model_repo": "Qwen/Qwen2.5-0.5B-Instruct", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 84.4, "schema_compliance_pct": 78.2, "schema_evaluated_examples": 500, "exact_match_pct": 44.6, "field_accuracy_pct": 88.48, "evaluated_fields": 3411, "family": "Qwen2.5", "size": "0.5B", "format": "Base", "kind": "Base model", "source": "Baseline ZIP"}, {"model_label": "qwen-1.5B", "model_repo": "Qwen/Qwen2.5-1.5B-Instruct", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 98.6, "schema_compliance_pct": 97.4, "schema_evaluated_examples": 500, "exact_match_pct": 63.6, "field_accuracy_pct": 94.6, "evaluated_fields": 3961, "family": "Qwen2.5", "size": "1.5B", "format": "Base", "kind": "Base model", "source": "Baseline ZIP"}, {"model_label": "qwen-3B", "model_repo": "Qwen/Qwen2.5-3B-Instruct", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 99.4, "schema_compliance_pct": 99.0, "schema_evaluated_examples": 500, "exact_match_pct": 71.2, "field_accuracy_pct": 95.76, "evaluated_fields": 3985, "family": "Qwen2.5", "size": "3B", "format": "Base", "kind": "Base model", "source": "Baseline ZIP"}, {"model_label": "0.5B QLoRA 4-bit", "model_repo": "vara201/qwen2.5-0.5b-ecommerce-qlora-4bit", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 99.8, "schema_compliance_pct": 96.2, "schema_evaluated_examples": 500, "exact_match_pct": 68.4, "field_accuracy_pct": 93.95, "evaluated_fields": 4000, "family": "Qwen2.5", "size": "0.5B", "format": "QLoRA 4-bit", "kind": "Merged fine-tuned", "source": "Merged evaluation ZIP"}, {"model_label": "0.5B QLoRA 8-bit", "model_repo": "vara201/qwen2.5-0.5b-ecommerce-qlora-8bit", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 99.6, "schema_compliance_pct": 99.0, "schema_evaluated_examples": 500, "exact_match_pct": 61.2, "field_accuracy_pct": 93.46, "evaluated_fields": 3989, "family": "Qwen2.5", "size": "0.5B", "format": "QLoRA 8-bit", "kind": "Merged fine-tuned", "source": "Merged evaluation ZIP"}, {"model_label": "0.5B LoRA FP16", "model_repo": "vara201/qwen2.5-0.5b-ecommerce-lora-fp16", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 99.6, "schema_compliance_pct": 98.6, "schema_evaluated_examples": 500, "exact_match_pct": 72.2, "field_accuracy_pct": 95.1, "evaluated_fields": 3981, "family": "Qwen2.5", "size": "0.5B", "format": "LoRA FP16", "kind": "Merged fine-tuned", "source": "Merged evaluation ZIP"}, {"model_label": "1.5B QLoRA 4-bit", "model_repo": "vara201/Qwen2.5-1.5B-ecommerce-qlora-4bit", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 99.8, "schema_compliance_pct": 99.6, "schema_evaluated_examples": 500, "exact_match_pct": 77.0, "field_accuracy_pct": 96.52, "evaluated_fields": 3999, "family": "Qwen2.5", "size": "1.5B", "format": "QLoRA 4-bit", "kind": "Merged fine-tuned", "source": "Merged evaluation ZIP"}, {"model_label": "1.5B QLoRA 8-bit", "model_repo": "vara201/Qwen2.5-1.5B-ecommerce-qlora-8bit", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 99.6, "schema_compliance_pct": 99.2, "schema_evaluated_examples": 500, "exact_match_pct": 72.6, "field_accuracy_pct": 95.68, "evaluated_fields": 3981, "family": "Qwen2.5", "size": "1.5B", "format": "QLoRA 8-bit", "kind": "Merged fine-tuned", "source": "Merged evaluation ZIP"}, {"model_label": "1.5B LoRA FP16", "model_repo": "vara201/Qwen2.5-1.5B-ecommerce-lora-fp16", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 99.6, "schema_compliance_pct": 99.2, "schema_evaluated_examples": 500, "exact_match_pct": 72.6, "field_accuracy_pct": 95.68, "evaluated_fields": 3981, "family": "Qwen2.5", "size": "1.5B", "format": "LoRA FP16", "kind": "Merged fine-tuned", "source": "Merged evaluation ZIP"}, {"model_label": "3B QLoRA 4-bit", "model_repo": "vara201/Qwen2.5-3B-ecommerce-qlora-4bit-merged", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 99.8, "schema_compliance_pct": 99.8, "schema_evaluated_examples": 500, "exact_match_pct": 84.2, "field_accuracy_pct": 97.75, "evaluated_fields": 3999, "family": "Qwen2.5", "size": "3B", "format": "QLoRA 4-bit", "kind": "Merged fine-tuned", "source": "Merged evaluation ZIP"}, {"model_label": "3B QLoRA 8-bit", "model_repo": "vara201/Qwen2.5-3B-ecommerce-qlora-8bit-merged", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 100.0, "schema_compliance_pct": 99.8, "schema_evaluated_examples": 500, "exact_match_pct": 80.8, "field_accuracy_pct": 97.23, "evaluated_fields": 4005, "family": "Qwen2.5", "size": "3B", "format": "QLoRA 8-bit", "kind": "Merged fine-tuned", "source": "Merged evaluation ZIP"}, {"model_label": "3B LoRA FP16", "model_repo": "vara201/Qwen2.5-3B-ecommerce-lora-fp16-merged", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 99.6, "schema_compliance_pct": 99.6, "schema_evaluated_examples": 500, "exact_match_pct": 78.6, "field_accuracy_pct": 96.9, "evaluated_fields": 3994, "family": "Qwen2.5", "size": "3B", "format": "LoRA FP16", "kind": "Merged fine-tuned", "source": "Merged evaluation ZIP"}, {"model_label": "0.5B_QLoRA_4bit", "model_repo": "vara201/qwen2.5-0.5b-ecommerce-qlora-4bit", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 99.6, "schema_compliance_pct": 94.8, "schema_evaluated_examples": 500, "exact_match_pct": 68.0, "field_accuracy_pct": 92.44, "evaluated_fields": 3981, "size": "0.5B", "format": "QLoRA 4-bit", "kind": "Adapter evaluation", "source": "Standalone adapter metrics JSON", "family": "Qwen2.5"}, {"model_label": "0.5B_QLoRA_8bit", "model_repo": "vara201/qwen2.5-0.5b-ecommerce-qlora-8bit", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 100.0, "schema_compliance_pct": 99.0, "schema_evaluated_examples": 500, "exact_match_pct": 63.8, "field_accuracy_pct": 93.58, "evaluated_fields": 4005, "size": "0.5B", "format": "QLoRA 8-bit", "kind": "Adapter evaluation", "source": "Standalone adapter metrics JSON", "family": "Qwen2.5"}, {"model_label": "0.5B_LoRA_FP16", "model_repo": "vara201/qwen2.5-0.5b-ecommerce-lora-fp16", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 99.6, "schema_compliance_pct": 98.4, "schema_evaluated_examples": 500, "exact_match_pct": 71.6, "field_accuracy_pct": 94.95, "evaluated_fields": 3981, "size": "0.5B", "format": "LoRA FP16", "kind": "Adapter evaluation", "source": "Standalone adapter metrics JSON", "family": "Qwen2.5"}, {"model_label": "1.5B_QLoRA_4bit", "model_repo": "vara201/Qwen2.5-1.5B-ecommerce-qlora-4bit", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 99.8, "schema_compliance_pct": 99.6, "schema_evaluated_examples": 500, "exact_match_pct": 75.2, "field_accuracy_pct": 96.22, "evaluated_fields": 3999, "size": "1.5B", "format": "QLoRA 4-bit", "kind": "Adapter evaluation", "source": "Standalone adapter metrics JSON", "family": "Qwen2.5"}, {"model_label": "1.5B_QLoRA_8bit", "model_repo": "vara201/Qwen2.5-1.5B-ecommerce-qlora-8bit", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 99.4, "schema_compliance_pct": 98.8, "schema_evaluated_examples": 500, "exact_match_pct": 71.6, "field_accuracy_pct": 95.62, "evaluated_fields": 3974, "size": "1.5B", "format": "QLoRA 8-bit", "kind": "Adapter evaluation", "source": "Standalone adapter metrics JSON", "family": "Qwen2.5"}, {"model_label": "1.5B_LoRA_FP16", "model_repo": "vara201/Qwen2.5-1.5B-ecommerce-lora-fp16", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 99.6, "schema_compliance_pct": 99.2, "schema_evaluated_examples": 500, "exact_match_pct": 72.4, "field_accuracy_pct": 95.65, "evaluated_fields": 3981, "size": "1.5B", "format": "LoRA FP16", "kind": "Adapter evaluation", "source": "Standalone adapter metrics JSON", "family": "Qwen2.5"}, {"model_label": "3B_QLoRA_4bit", "model_repo": "vara201/qwen2.5-3B-ecommerce-qlora-4bit", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 99.8, "schema_compliance_pct": 99.6, "schema_evaluated_examples": 500, "exact_match_pct": 83.4, "field_accuracy_pct": 97.67, "evaluated_fields": 3999, "size": "3B", "format": "QLoRA 4-bit", "kind": "Adapter evaluation", "source": "Standalone adapter metrics JSON", "family": "Qwen2.5"}, {"model_label": "3B_QLoRA_8bit", "model_repo": "vara201/qwen2.5-3B-ecommerce-qlora-8bit", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 100.0, "schema_compliance_pct": 99.8, "schema_evaluated_examples": 500, "exact_match_pct": 81.4, "field_accuracy_pct": 97.35, "evaluated_fields": 4005, "size": "3B", "format": "QLoRA 8-bit", "kind": "Adapter evaluation", "source": "Standalone adapter metrics JSON", "family": "Qwen2.5"}, {"model_label": "3B_LoRA_FP16", "model_repo": "vara201/qwen2.5-3B-ecommerce-lora-fp16", "evaluation_examples": 500, "generation_failures": 0, "json_parse_success_pct": 99.6, "schema_compliance_pct": 99.6, "schema_evaluated_examples": 500, "exact_match_pct": 78.8, "field_accuracy_pct": 96.92, "evaluated_fields": 3994, "size": "3B", "format": "LoRA FP16", "kind": "Adapter evaluation", "source": "Standalone adapter metrics JSON", "family": "Qwen2.5"}];
+const pct = v => (v === null || v === undefined || Number.isNaN(Number(v))) ? "—" : Number(v).toFixed(2).replace(/\.00$/,"") + "%";
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function runName(d){return `${d.size || ""} ${d.format || ""}`.trim();}
+function sortData(data, metric){return [...data].sort((a,b)=>(Number(b[metric] ?? -1)-Number(a[metric] ?? -1)));}
+function filteredData(){
+ const size=document.getElementById("sizeFilter").value, kind=document.getElementById("kindFilter").value, fmt=document.getElementById("formatFilter").value, metric=document.getElementById("metricFilter").value;
+ return sortData(RESULTS.filter(d=>(!size||d.size===size)&&(!kind||d.kind===kind)&&(!fmt||d.format===fmt)),metric);
+}
+function renderTable(){
+ const data=filteredData(), metric=document.getElementById("metricFilter").value;
+ const best=data.length?Math.max(...data.map(d=>Number(d[metric]??-1))):-1;
+ document.getElementById("resultsBody").innerHTML=data.map(d=>`<tr>
+ <td><span class="model">${esc(runName(d))}</span><span class="sub">${esc(d.model_label)}</span></td>
+ <td><span class="pill ${d.kind==="Merged fine-tuned"?"cyan":""}">${esc(d.kind)}</span></td>
+ <td>${pct(d.json_parse_success_pct)}</td><td>${pct(d.schema_compliance_pct)}</td>
+ <td class="${Number(d[metric])===best?"best":""}">${pct(d.exact_match_pct)}</td><td>${pct(d.field_accuracy_pct)}</td>
+ <td>${d.generation_failures ?? "—"}</td><td>${d.evaluation_examples ?? "—"}</td></tr>`).join("") || `<tr><td colspan="8" class="empty">No runs match these filters.</td></tr>`;
+ document.getElementById("rowCount").textContent=`Showing ${data.length} of ${RESULTS.length} runs · ranked by ${metric.replaceAll("_"," ")}`;
+}
+["sizeFilter","kindFilter","formatFilter","metricFilter"].forEach(id=>document.getElementById(id).addEventListener("change",renderTable));
+
+function drawBarChart(canvasId, items, labelFn, valueFn, color="#7ce7d4", max=100){
+ const canvas=document.getElementById(canvasId), ctx=canvas.getContext("2d"), rect=canvas.getBoundingClientRect(), dpr=window.devicePixelRatio||1;
+ canvas.width=Math.max(1,rect.width*dpr);canvas.height=Math.max(1,rect.height*dpr);ctx.scale(dpr,dpr);
+ const w=rect.width,h=rect.height;ctx.clearRect(0,0,w,h);
+ const left=canvasId==="exactChart"?126:110,right=38,top=8,bottom=28;
+ const plotW=w-left-right,plotH=h-top-bottom;
+ ctx.font="10px system-ui";ctx.fillStyle="#94a4ba";ctx.strokeStyle="#293448";ctx.lineWidth=1;
+ [0,20,40,60,80,100].forEach(t=>{const x=left+plotW*t/max;ctx.beginPath();ctx.moveTo(x,top);ctx.lineTo(x,top+plotH);ctx.stroke();ctx.fillText(t+"%",x-9, h-9);});
+ const rowH=plotH/items.length;
+ items.forEach((d,i)=>{const y=top+i*rowH+rowH*.22, bh=Math.max(5,rowH*.52), v=Number(valueFn(d)||0), bw=Math.max(0,plotW*v/max);
+ ctx.fillStyle="#aebbd0";ctx.textAlign="right";ctx.fillText(labelFn(d).slice(0,20),left-9,y+bh*.78);
+ ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(left,y,bw,bh,4);ctx.fill();
+ ctx.fillStyle="#f2f5fb";ctx.textAlign="left";ctx.fillText(v.toFixed(1)+"%",Math.min(left+bw+5,w-32),y+bh*.78);
+ });
+}
+function drawQualityChart(){
+ const canvas=document.getElementById("qualityChart"),ctx=canvas.getContext("2d"),rect=canvas.getBoundingClientRect(),dpr=window.devicePixelRatio||1;
+ canvas.width=Math.max(1,rect.width*dpr);canvas.height=Math.max(1,rect.height*dpr);ctx.scale(dpr,dpr);
+ const w=rect.width,h=rect.height;ctx.clearRect(0,0,w,h);
+ const data=RESULTS.filter(d=>d.kind==="Merged fine-tuned").sort((a,b)=>b.exact_match_pct-a.exact_match_pct).slice(0,3);
+ const metrics=[["JSON parse","json_parse_success_pct","#7ce7d4"],["Schema","schema_compliance_pct","#86a9ff"],["Exact match","exact_match_pct","#c5a3ff"],["Field acc.","field_accuracy_pct","#ffbd7a"]];
+ const left=102,right=30,top=12,bottom=30,plotW=w-left-right,plotH=h-top-bottom;
+ ctx.font="10px system-ui";ctx.fillStyle="#94a4ba";ctx.strokeStyle="#293448";
+ [0,20,40,60,80,100].forEach(t=>{const x=left+plotW*t/100;ctx.beginPath();ctx.moveTo(x,top);ctx.lineTo(x,top+plotH);ctx.stroke();ctx.fillText(t+"%",x-9,h-9);});
+ const rowH=plotH/data.length;
+ data.forEach((d,i)=>{const baseY=top+i*rowH;ctx.textAlign="right";ctx.fillStyle="#c5d0e0";ctx.fillText(`${d.size} ${d.format.replace("QLoRA ","")}`.slice(0,17),left-8,baseY+rowH*.48);
+ metrics.forEach((m,j)=>{const y=baseY+4+j*(rowH-8)/4, bh=Math.max(4,(rowH-8)/5), v=Number(d[m[1]]||0);ctx.fillStyle=m[2];ctx.beginPath();ctx.roundRect(left,y,plotW*v/100,bh,3);ctx.fill();});
+ });
+ const legend=document.createElement("div");legend.style.display="none";
+}
+function renderHighlights(){
+ const cards=[
+  {title:"Qwen2.5 · 3B",format:"QLoRA 4-bit",kind:"Merged fine-tuned",size:"3B",exact:84.2,json:99.8,schema:99.8,field:97.75,repo:"vara201/Qwen2.5-3B-ecommerce-qlora-4bit-merged",note:"Best reported merged exact match"},
+  {title:"Qwen2.5 · 3B",format:"QLoRA 4-bit",kind:"Adapter evaluation",size:"3B",exact:83.4,json:99.8,schema:99.6,field:97.67,repo:"vara201/qwen2.5-3B-ecommerce-qlora-4bit",note:"Best reported adapter-run exact match"},
+  {title:"Qwen2.5 · 1.5B",format:"QLoRA 4-bit",kind:"Merged fine-tuned",size:"1.5B",exact:77.0,json:99.8,schema:99.6,field:96.52,repo:"vara201/Qwen2.5-1.5B-ecommerce-qlora-4bit",note:"Strong smaller-model result"}
+ ];
+ document.getElementById("highlightCards").innerHTML=cards.map(c=>`<article class="model-card"><div class="card-top"><div><h3>${esc(c.title)}</h3><p>${esc(c.note)}</p></div><span class="pill cyan">${esc(c.format)}</span></div><div class="card-body"><div class="bigmetric"><strong>${pct(c.exact)}</strong><span>Exact match</span></div><div class="metricline"><span>JSON parse success</span><b>${pct(c.json)}</b></div><div class="metricline"><span>Schema compliance</span><b>${pct(c.schema)}</b></div><div class="metricline"><span>Field accuracy</span><b>${pct(c.field)}</b></div><div class="card-links"><a href="https://huggingface.co/${encodeURI(c.repo)}" target="_blank" rel="noopener">View model ↗</a><a href="#results">Compare results ↓</a></div></div></article>`).join("");
+}
+function drawCharts(){
+ const top=sortData(RESULTS.filter(d=>d.kind==="Merged fine-tuned"),"exact_match_pct").slice(0,7).reverse();
+ drawBarChart("exactChart",top,d=>`${d.size} ${d.format.replace("QLoRA ","")}`,d=>d.exact_match_pct,"#7ce7d4",100);
+ drawQualityChart();
+}
+renderTable();renderHighlights();drawCharts();window.addEventListener("resize",drawCharts);
+</script>
+</body>
+</html>
